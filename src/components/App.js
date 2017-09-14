@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import '../styles/App.css';
+import React, { Component } from "react";
+import "../styles/App.css";
 
 class App extends Component {
   // PROPS AND STATE
@@ -19,18 +19,15 @@ class App extends Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
-
-
   // FORM: HANDLE INPUT CHANGES
   // handleNameChange below:
   // See form lesson for details.
   // Enter your code below:
-  handleNameChange(event){
+  handleNameChange(event) {
     this.setState({
       value: event.target.value
-    })
+    });
   }
-
 
   //  FORM: SUBMIT METHOD
   // handleSubmit below:
@@ -38,15 +35,13 @@ class App extends Component {
   // Once the form is sumbited, two things need to happen: set the state of pilot to the input value.
   // Then, set the value of the input back to an empty string.
   // Enter your code below:
-  handleFormSubmit(event){
-  event.preventDefault()
-  this.setState({
-    pilot: this.state.value,
-    value: ""
-  })
-}
-
-
+  handleFormSubmit(event) {
+    event.preventDefault();
+    this.setState({
+      pilot: this.state.value,
+      value: ""
+    });
+  }
 
   // LIFECYCLE
   // Which lifecycle is best for fetching data?
@@ -65,13 +60,15 @@ class App extends Component {
   // }
 
   componentDidMount() {
-    fetch('https://swapi.co/api/vehicles/').then((response) => {
-      return response.json()
-    }).then((json) => {
-      let vehicles = json.results;
-      console.log(vehicles)
-      this.setState({vehicles: vehicles})
-    })
+    fetch("https://swapi.co/api/vehicles/")
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        let vehicles = json.results;
+        console.log(vehicles);
+        this.setState({ vehicles: vehicles });
+      });
   }
 
   // RENDER
@@ -84,54 +81,73 @@ class App extends Component {
 
   render() {
     let vehicleArray = this.state.vehicles;
-    let vehicles = vehicleArray.map( (vehicle) => {
-      return( <div key={vehicle.name}>
-      <p> name:{vehicle.name} </p>
-      <p> model: {vehicle.model}</p>
-      <p> manufacturer:{vehicle.manufacturer} </p>
-      <p> class:{vehicle.vehicle_class} </p>
-      <p> passengers:{vehicle.passengers} </p>
-      <p> crew:{vehicle.crew} </p>
-      <p> length:{vehicle.length} </p>
-      <p> max speed: {vehicle.max_atmosphering_speed} </p>
-      <p> cargo capacity: {vehicle.cargo_capacity} </p>
-      </div>
-    )
-      })
+    let vehicles = vehicleArray.map(vehicle => {
+      return (
+        <div key={vehicle.name} className = "col-md-4">
+        <div className="card">
+          <div className="card-block">
+          <h4 className="card-title">Vehicle: {vehicle.name}</h4>
+          <h5 className="card-subtitle mb-2 text-muted">Model: {vehicle.model}</h5>
+          <div className="card">
+          <div className="card-block">
+            <h5 className="card-subtitle mb-2 text-muted">Specs</h5>
+            <ul className="list-group list-group-flush">
+            <li className="list-group-item">Manufacturer: {vehicle.manufacturer}</li>
+            <li className="list-group-item">Class: {vehicle.vehicle_class}</li>
+            <li className="list-group-item">Passengers: {vehicle.passengers}</li>
+            <li className="list-group-item">Crew: {vehicle.crew}</li>
+            <li className="list-group-item">Length: {vehicle.length}</li>
+            <li className="list-group-item">Max Speed: {vehicle.max_atmosphering_speed}</li>
+            <li className="list-group-item">Cargo Capacity: {vehicle.cargo_capacity}</li>
+          </ul>
+          </div>
+          </div>
+          </div>
+          </div>
+        </div>
+      );
+    });
     return (
       <div className="App">
-
+      <main className="row">
+        <section className="col-md-10 offset-md-1">
         <div className="jumbotron">
-          <h1>StarWars Pilots</h1>
-          <hr/>
-          <p> The vehicle of StarWars </p>
+          <h1 className="display-3">Star Wars</h1 > <hr className="my-4"/> < p className = "lead" > The Vehicles of Star Wars < /p>
         </div>
 
-        <div>
+        <div className="card form">
+          <div className="card-block">
+            <h2 className="card-title">What is your name, pilot?</h2>
 
-            <div>
-            <h1> What is your name, Pilot? </h1>
-            </div>
-            <form onSubmit={this.handleFormSubmit}>
+          <form onSubmit={this.handleFormSubmit}>
             <div className="form-group">
-              <input className="form-control col-md-3" name="name"  type="text" placeholder="Enter your name" onChange={this.handleNameChange} value={this.state.value}/>
+              <input
+                className="form-control col-md-4 offset-md-4"
+                name="name"
+                type="text"
+                placeholder="Enter your name"
+                onChange={this.handleNameChange}
+                value={this.state.value}
+              />
             </div>
-            <div className="form-group pull-right">
-              <input className="btn btn-primary btn-lg" type="submit" value="Submit"/>
-            </div>
-          </form>
+              <input
+                className="btn btn-primary"
+                type="submit"
+                value="Submit"
+              />
+              </form>
+
           <h1>{this.state.pilot}</h1>
+          </div>
         </div>
-
-        <div>
+        < div className = "row" >
           {vehicles}
+        < /div>
+        </section >
+        </main>
         </div>
-
-      </div>
-
-
-    )};
-  }
-
+        );
+        }
+        }
 
 export default App;
