@@ -108,17 +108,19 @@ class App extends Component {
         </div>
 
         <div>
-          <form>
+
             <div>
             <h1> What is your name, Pilot? </h1>
             </div>
+            <form onSubmit={this.handleFormSubmit}>
             <div className="form-group">
-              <input className="form-control col-md-3" name="name"  type="text" placeholder="Enter your name"/>
+              <input className="form-control col-md-3" name="name"  type="text" placeholder="Enter your name" onChange={this.handleNameChange} value={this.state.value}/>
             </div>
             <div className="form-group pull-right">
               <input className="btn btn-primary btn-lg" type="submit" value="Submit"/>
             </div>
           </form>
+          <h1>{this.state.pilot}</h1>
         </div>
 
         <div>
