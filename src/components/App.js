@@ -46,17 +46,41 @@ class App extends Component {
     Store vehicles state in a variable.
     Map over this variable to access the values needed to render.
     */
-    })
+
     return (
       <div className="App">
-        {/*
-        The App component needs the following:
-         jumbotron section, form section, vehicle cards section.
-         Your form will also need a header in which you will pass the state of the form upon submit.
-         */}
+
+        <div className="jumbotron">
+          <h1>StarWars Pilots</h1>
+          <hr/>
+          <p> The vehicle of StarWars </p>
+        </div>
+
+        <div>
+          <form>
+            <div>
+            <h1> What is your name, Pilot? </h1>
+            </div>
+            <div className="form-group">
+              <input className="form-control col-md-3" name="name"  type="text" placeholder="Enter your name"/>
+            </div>
+            <div className="form-group pull-right">
+              <input className="btn btn-primary btn-lg" type="submit" value="Submit"/>
+            </div>
+          </form>
+        </div>
+
       </div>
-    );
+
+
+    )};
   }
-}
+
 
 export default App;
+
+// {/*
+// The App component needs the following:
+//  jumbotron section, form section, vehicle cards section.
+//  Your form will also need a header in which you will pass the state of the form upon submit.
+//  */}
