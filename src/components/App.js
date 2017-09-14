@@ -6,6 +6,18 @@ class App extends Component {
   // Set props and state below.
   // You should set state for vehicles (empty array), value (empty string), pilot (empty) string.
   // Enter your code below:
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      vehicles: [],
+      value: "",
+      pilot: ""
+    };
+
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+  }
 
 
 
@@ -13,7 +25,11 @@ class App extends Component {
   // handleNameChange below:
   // See form lesson for details.
   // Enter your code below:
-
+  handleNameChange(event){
+    this.setState({
+      value: event.target.value
+    })
+  }
 
 
   //  FORM: SUBMIT METHOD
@@ -22,6 +38,14 @@ class App extends Component {
   // Once the form is sumbited, two things need to happen: set the state of pilot to the input value.
   // Then, set the value of the input back to an empty string.
   // Enter your code below:
+  handleFormSubmit(event){
+  event.preventDefault()
+  this.setState({
+    pilot: this.state.value,
+    value: ""
+  })
+}
+
 
 
   // LIFECYCLE
@@ -31,7 +55,24 @@ class App extends Component {
   // In your response look for 'results'. It should return this array.
   // You will want to use this array when you set the state of 'vehicles'. You will need this data in your render.
   // Enter your code below:
+  // componentWillMount() {
+  //   fetch('https://swapi.co/api/vehicles/')
+  //   .then(r => r.json() )
+  //   .then((json) => {
+  //     console.log( json)
+  //     this.setState({vehicleData: json})
+  //   })
+  // }
 
+  componentDidMount() {
+    fetch('https://swapi.co/api/vehicles/').then((response) => {
+      return response.json()
+    }).then((json) => {
+      let vehicles = json.results;
+      console.log(vehicles)
+      this.setState({vehicles: vehicles})
+    })
+  }
 
   // RENDER
   // Before you can map over the data you've fetched, you will first need to store that 'state' in a variable.
@@ -42,11 +83,21 @@ class App extends Component {
   // Enter your code below:
 
   render() {
-    /*
-    Store vehicles state in a variable.
-    Map over this variable to access the values needed to render.
-    */
-
+    let vehicleArray = this.state.vehicles;
+    let vehicles = vehicleArray.map( (vehicle) => {
+      return( <div key={vehicle.name}>
+      <p> name:{vehicle.name} </p>
+      <p> model: {vehicle.model}</p>
+      <p> manufacturer:{vehicle.manufacturer} </p>
+      <p> class:{vehicle.vehicle_class} </p>
+      <p> passengers:{vehicle.passengers} </p>
+      <p> crew:{vehicle.crew} </p>
+      <p> length:{vehicle.length} </p>
+      <p> max speed: {vehicle.max_atmosphering_speed} </p>
+      <p> cargo capacity: {vehicle.cargo_capacity} </p>
+      </div>
+    )
+      })
     return (
       <div className="App">
 
@@ -70,6 +121,10 @@ class App extends Component {
           </form>
         </div>
 
+        <div>
+          {vehicles}
+        </div>
+
       </div>
 
 
@@ -78,9 +133,3 @@ class App extends Component {
 
 
 export default App;
-
-// {/*
-// The App component needs the following:
-//  jumbotron section, form section, vehicle cards section.
-//  Your form will also need a header in which you will pass the state of the form upon submit.
-//  */}
